@@ -211,6 +211,19 @@ const REPORTS = [
 
 let currentReport = 0;
 let currentQuestion = 0;
+let reportOrder = [];
+
+function shuffleReports() {
+  reportOrder = REPORTS.map((_, i) => i);
+  for (let i = reportOrder.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [reportOrder[i], reportOrder[j]] = [reportOrder[j], reportOrder[i]];
+  }
+}
+
+function getActiveReport() {
+  return REPORTS[reportOrder[currentReport]];
+}
 
 const app = document.getElementById("app");
 const reportTitle = document.getElementById("report-title");
@@ -232,7 +245,7 @@ function renderVocabulary() {
 }
 
 function renderReport() {
-  const report = REPORTS[currentReport];
+  const report = getActiveReport();
   reportTitle.textContent = `Bericht ${currentReport + 1}: ${report.title}`;
   reportBody.innerHTML = report.paragraphs.map((p) => `<p>${p}</p>`).join("");
   updateProgress();
@@ -296,6 +309,7 @@ function handleWeiter() {
 function restart() {
   currentReport = 0;
   currentQuestion = 0;
+  shuffleReports();
   overlay.classList.add("hidden");
   renderReport();
   showQuestion();
@@ -311,5 +325,6 @@ btnVocab.addEventListener("click", () => {
 });
 
 renderVocabulary();
+shuffleReports();
 renderReport();
 showQuestion();
