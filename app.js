@@ -227,6 +227,134 @@ const overlay = document.getElementById("overlay");
 const btnRestart = document.getElementById("btn-restart");
 const btnVocab = document.getElementById("btn-vocab");
 const vocabPanel = document.getElementById("vocab-panel");
+const btnVorlesen = document.getElementById("btn-vorlesen");
+
+const SOUNDS_DIR = "sounds";
+
+let isSpeaking = false;
+let playbackSession = 0;
+let soundManifest = [];
+const reportAudio = new Audio();
+
+async function loadSoundManifest() {
+  try {
+    const response = await fetch(`${SOUNDS_DIR}/manifest.json`);
+    if (!response.ok) throw new Error("manifest missing");
+    soundManifest = await response.json();
+  } catch {
+    soundManifest = [];
+  }
+}
+
+function getActiveSoundEntry() {
+  const originalIndex = reportOrder[currentReport];
+  return soundManifest.find((entry) => entry.index === originalIndex + 1) || null;
+}
+
+function htmlToPlainText(html) {
+  const el = document.createElement("div");
+  el.innerHTML = html;
+  return el.textContent.replace(/\s+/g, " ").trim();
+}
+
+function getReportSpeechChunks() {
+  const report = getActiveReport();
+  return [
+    report.title,
+    ...report.paragraphs.map((paragraph) => htmlToPlainText(paragraph)),
+  ].filter(Boolean);
+}
+
+function setVorlesenButton(speaking, voiceLabel = "gTTS (MP3)") {
+  isSpeaking = speaking;
+  btnVorlesen.textContent = speaking ? "Stoppen" : "Vorlesen";
+  btnVorlesen.setAttribute("aria-pressed", String(speaking));
+  btnVorlesen.title = soundManifest.length
+    ? `Stimme: ${voiceLabel}`
+    : "MP3 nicht gefunden – Browser-Stimme";
+}
+
+function stopSpeaking() {
+  playbackSession += 1;
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+  reportAudio.pause();
+  reportAudio.currentTime = 0;
+  reportAudio.removeAttribute("src");
+  reportAudio.load();
+  setVorlesenButton(false);
+}
+
+function speakReportFallback() {
+  if (!("speechSynthesis" in window)) {
+    alert("Vorlesen nicht verfügbar. Bitte MP3s mit tools/generate_sounds.py erzeugen.");
+    return;
+  }
+
+  const chunks = getReportSpeechChunks();
+  const session = playbackSession + 1;
+  playbackSession = session;
+  speechSynthesis.cancel();
+
+  chunks.forEach((chunk, index) => {
+    const utterance = new SpeechSynthesisUtterance(chunk);
+    utterance.lang = "en-GB";
+    utterance.rate = 0.94;
+
+    utterance.onstart = () => {
+      if (playbackSession === session) setVorlesenButton(true, "Browser");
+    };
+
+    utterance.onend = () => {
+      if (playbackSession === session && index === chunks.length - 1) {
+        setVorlesenButton(false);
+      }
+    };
+
+    utterance.onerror = () => {
+      if (playbackSession === session) setVorlesenButton(false);
+    };
+
+    speechSynthesis.speak(utterance);
+  });
+}
+
+async function speakReport() {
+  if (isSpeaking) {
+    stopSpeaking();
+    return;
+  }
+
+  if (!soundManifest.length) await loadSoundManifest();
+
+  const soundEntry = getActiveSoundEntry();
+  if (soundEntry?.file) {
+    const session = playbackSession + 1;
+    playbackSession = session;
+
+    reportAudio.pause();
+    reportAudio.currentTime = 0;
+    reportAudio.src = `${SOUNDS_DIR}/${soundEntry.file}`;
+
+    reportAudio.onended = () => {
+      if (playbackSession === session) setVorlesenButton(false);
+    };
+
+    reportAudio.onerror = () => {
+      if (playbackSession === session) speakReportFallback();
+    };
+
+    try {
+      await reportAudio.play();
+      setVorlesenButton(true, "gTTS (MP3)");
+      return;
+    } catch {
+      if (playbackSession === session) speakReportFallback();
+      return;
+    }
+  }
+
+  speakReportFallback();
+}
 
 function renderVocabulary() {
   vocabPanel.innerHTML = VOCABULARY.map(
@@ -235,6 +363,7 @@ function renderVocabulary() {
 }
 
 function renderReport() {
+  stopSpeaking();
   const report = getActiveReport();
   reportTitle.textContent = `Bericht ${currentReport + 1}: ${report.title}`;
   reportBody.innerHTML = report.paragraphs.map((p) => `<p>${p}</p>`).join("");
@@ -314,7 +443,11 @@ btnVocab.addEventListener("click", () => {
   btnVocab.textContent = open ? "Vokabelliste anzeigen" : "Vokabelliste ausblenden";
 });
 
+btnVorlesen.addEventListener("click", speakReport);
+
 renderVocabulary();
 shuffleReports();
 renderReport();
 showQuestion();
+
+loadSoundManifest().then(() => setVorlesenButton(false));

@@ -1,0 +1,62 @@
+[
+  {
+    "index": 1,
+    "title": "New Year's Eve Celebration",
+    "slug": "new-years-eve-celebration",
+    "file": "01-new-years-eve-celebration.mp3"
+  },
+  {
+    "index": 2,
+    "title": "The Summer Parade",
+    "slug": "the-summer-parade",
+    "file": "02-the-summer-parade.mp3"
+  },
+  {
+    "index": 3,
+    "title": "Charity Festival in the Park",
+    "slug": "charity-festival-in-the-park",
+    "file": "03-charity-festival-in-the-park.mp3"
+  },
+  {
+    "index": 4,
+    "title": "The Street Artist",
+    "slug": "the-street-artist",
+    "file": "04-the-street-artist.mp3"
+  },
+  {
+    "index": 5,
+    "title": "Choir Concert with Encore",
+    "slug": "choir-concert-with-encore",
+    "file": "05-choir-concert-with-encore.mp3"
+  },
+  {
+    "index": 6,
+    "title": "Art Demonstration at School",
+    "slug": "art-demonstration-at-school",
+    "file": "06-art-demonstration-at-school.mp3"
+  },
+  {
+    "index": 7,
+    "title": "Spanish Painting Workshop",
+    "slug": "spanish-painting-workshop",
+    "file": "07-spanish-painting-workshop.mp3"
+  },
+  {
+    "index": 8,
+    "title": "Indian Cooking Competition",
+    "slug": "indian-cooking-competition",
+    "file": "08-indian-cooking-competition.mp3"
+  },
+  {
+    "index": 9,
+    "title": "Puppet Show: The Brave Knight",
+    "slug": "puppet-show-the-brave-knight",
+    "file": "09-puppet-show-the-brave-knight.mp3"
+  },
+  {
+    "index": 10,
+    "title": "Clean-Up Day Routine",
+    "slug": "clean-up-day-routine",
+    "file": "10-clean-up-day-routine.mp3"
+  }
+]
