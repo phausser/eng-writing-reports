@@ -7,31 +7,111 @@
 }
 
 :root {
-  --bg: #f4f6f9;
-  --surface: #ffffff;
   --text: #1a2332;
   --text-muted: #5a6a7e;
-  --accent: #2d5a8e;
-  --accent-light: #e8f0f8;
-  --highlight: #ffd6d6;
-  --highlight-border: #e8a0a0;
+  --surface: #ffffff;
   --border: #d8e0ea;
   --radius: 12px;
   --shadow: 0 4px 20px rgba(26, 35, 50, 0.08);
+
+  --theme-bg: #f4f6f9;
+  --theme-surface: #ffffff;
+  --theme-card: #e8f0f8;
+  --theme-border: #2d5a8e;
+  --theme-accent: #2d5a8e;
+  --theme-btn: #2d5a8e;
+  --theme-btn-hover: #234a75;
+  --theme-highlight: #ffd6d6;
+  --theme-highlight-border: #e8a0a0;
 }
 
 body {
   font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-  background: var(--bg);
+  background: var(--theme-bg);
   color: var(--text);
   line-height: 1.6;
   min-height: 100vh;
+  transition: background-color 0.4s ease;
 }
 
 .app {
   max-width: 780px;
   margin: 0 auto;
   padding: 1.5rem 1.25rem 3rem;
+}
+
+/* ── Farbthemen (hell) ── */
+
+.theme-rot {
+  --theme-bg: #fff5f5;
+  --theme-surface: #fffafa;
+  --theme-card: #ffe8e8;
+  --theme-border: #e88080;
+  --theme-accent: #b03030;
+  --theme-btn: #f08080;
+  --theme-btn-hover: #e06060;
+  --theme-highlight: #ffc8c8;
+  --theme-highlight-border: #e89090;
+}
+
+.theme-blau {
+  --theme-bg: #f0f6ff;
+  --theme-surface: #f8fbff;
+  --theme-card: #dcecff;
+  --theme-border: #6a9fd4;
+  --theme-accent: #2a5a9e;
+  --theme-btn: #7ab0e8;
+  --theme-btn-hover: #5890d0;
+  --theme-highlight: #c0dcff;
+  --theme-highlight-border: #80b0e0;
+}
+
+.theme-gelb {
+  --theme-bg: #fffbea;
+  --theme-surface: #fffcf0;
+  --theme-card: #fff3c4;
+  --theme-border: #d8b840;
+  --theme-accent: #7a6010;
+  --theme-btn: #f0d060;
+  --theme-btn-hover: #e0b840;
+  --theme-highlight: #ffe880;
+  --theme-highlight-border: #d8b040;
+}
+
+.theme-gruen {
+  --theme-bg: #f0faf2;
+  --theme-surface: #f8fdf9;
+  --theme-card: #d4f0dc;
+  --theme-border: #60b878;
+  --theme-accent: #2a7040;
+  --theme-btn: #70c888;
+  --theme-btn-hover: #50a868;
+  --theme-highlight: #b0e8c0;
+  --theme-highlight-border: #70c088;
+}
+
+.theme-orange {
+  --theme-bg: #fff6f0;
+  --theme-surface: #fffcf8;
+  --theme-card: #ffe8d4;
+  --theme-border: #e09050;
+  --theme-accent: #a05010;
+  --theme-btn: #f0a060;
+  --theme-btn-hover: #e08040;
+  --theme-highlight: #ffd0a8;
+  --theme-highlight-border: #e8a070;
+}
+
+.theme-lila {
+  --theme-bg: #f8f0ff;
+  --theme-surface: #fdfaff;
+  --theme-card: #ede0ff;
+  --theme-border: #a080d8;
+  --theme-accent: #6040a0;
+  --theme-btn: #b090e8;
+  --theme-btn-hover: #9070d0;
+  --theme-highlight: #d8c0ff;
+  --theme-highlight-border: #b090e0;
 }
 
 .header {
@@ -42,8 +122,9 @@ body {
 .header h1 {
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--theme-accent);
   letter-spacing: -0.02em;
+  transition: color 0.4s ease;
 }
 
 .subtitle {
@@ -63,10 +144,10 @@ body {
 
 .progress-fill {
   height: 100%;
-  background: var(--accent);
+  background: var(--theme-btn);
   border-radius: 99px;
   width: 10%;
-  transition: width 0.4s ease;
+  transition: width 0.4s ease, background-color 0.4s ease;
 }
 
 .progress-text {
@@ -81,18 +162,20 @@ body {
 }
 
 .report-section {
-  background: var(--surface);
+  background: var(--theme-surface);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 1.75rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--theme-border);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
 .report-title {
   font-size: 1.15rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: var(--accent);
+  color: var(--theme-accent);
+  transition: color 0.4s ease;
 }
 
 .report-body {
@@ -115,9 +198,15 @@ body {
 }
 
 .fact.revealed {
-  background-color: var(--highlight);
-  box-shadow: inset 0 0 0 1px var(--highlight-border);
+  box-shadow: inset 0 0 0 1px var(--theme-highlight-border);
 }
+
+.fact.revealed-rot    { background-color: #ffc8c8; box-shadow: inset 0 0 0 1px #e89090; }
+.fact.revealed-blau   { background-color: #c0dcff; box-shadow: inset 0 0 0 1px #80b0e0; }
+.fact.revealed-gelb   { background-color: #ffe880; box-shadow: inset 0 0 0 1px #d8b040; }
+.fact.revealed-gruen  { background-color: #b0e8c0; box-shadow: inset 0 0 0 1px #70c088; }
+.fact.revealed-orange { background-color: #ffd0a8; box-shadow: inset 0 0 0 1px #e8a070; }
+.fact.revealed-lila   { background-color: #d8c0ff; box-shadow: inset 0 0 0 1px #b090e0; }
 
 .question-section {
   display: flex;
@@ -127,21 +216,23 @@ body {
 }
 
 .question-card {
-  background: var(--accent-light);
-  border: 2px solid var(--accent);
+  background: var(--theme-card);
+  border: 2px solid var(--theme-border);
   border-radius: var(--radius);
   padding: 1.25rem 2rem;
   text-align: center;
   width: 100%;
   max-width: 400px;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
 .question-label {
   display: block;
   font-size: 2rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--theme-accent);
   line-height: 1.2;
+  transition: color 0.4s ease;
 }
 
 .question-hint {
@@ -151,7 +242,7 @@ body {
 }
 
 .btn-weiter {
-  background: var(--accent);
+  background: var(--theme-btn);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -159,11 +250,11 @@ body {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
+  transition: background 0.3s ease, transform 0.15s;
 }
 
 .btn-weiter:hover {
-  background: #234a75;
+  background: var(--theme-btn-hover);
 }
 
 .btn-weiter:active {
@@ -181,25 +272,26 @@ body {
 }
 
 .btn-vocab {
-  background: transparent;
-  border: 1px solid var(--border);
+  background: var(--theme-card);
+  border: 1px solid var(--theme-border);
   border-radius: 8px;
   padding: 0.5rem 1.25rem;
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--theme-accent);
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .btn-vocab:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  background: var(--theme-btn);
+  color: #fff;
+  border-color: var(--theme-btn);
 }
 
 .vocab-panel {
   margin-top: 1rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--theme-surface);
+  border: 1px solid var(--theme-border);
   border-radius: var(--radius);
   padding: 1.25rem;
   text-align: left;
@@ -220,7 +312,7 @@ body {
 }
 
 .vocab-item strong {
-  color: var(--accent);
+  color: var(--theme-accent);
 }
 
 .footer {
@@ -255,7 +347,7 @@ body {
 }
 
 .overlay-card h2 {
-  color: var(--accent);
+  color: var(--theme-accent);
   margin-bottom: 0.75rem;
 }
 

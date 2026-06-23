@@ -78,12 +78,12 @@ const VOCABULARY = [
 ];
 
 const QUESTIONS = [
-  { key: "wo", label: "Wo?", hint: "Wo hat das stattgefunden?" },
-  { key: "wann", label: "Wann?", hint: "Wann ist es passiert?" },
-  { key: "wer", label: "Wer?", hint: "Wer war beteiligt?" },
-  { key: "warum", label: "Warum?", hint: "Warum gab es das Ereignis?" },
-  { key: "wie", label: "Wie?", hint: "Wie ist es abgelaufen?" },
-  { key: "how", label: "How?", hint: "How did it happen? (Englisch)" },
+  { key: "wo", label: "Wo?", hint: "Wo hat das stattgefunden?", theme: "rot" },
+  { key: "wann", label: "Wann?", hint: "Wann ist es passiert?", theme: "blau" },
+  { key: "wer", label: "Wer?", hint: "Wer war beteiligt?", theme: "gelb" },
+  { key: "warum", label: "Warum?", hint: "Warum gab es das Ereignis?", theme: "gruen" },
+  { key: "wie", label: "Wie?", hint: "Wie ist es abgelaufen?", theme: "orange" },
+  { key: "how", label: "How?", hint: "How did it happen? (Englisch)", theme: "lila" },
 ];
 
 const REPORTS = [
@@ -212,6 +212,7 @@ const REPORTS = [
 let currentReport = 0;
 let currentQuestion = 0;
 
+const app = document.getElementById("app");
 const reportTitle = document.getElementById("report-title");
 const reportBody = document.getElementById("report-body");
 const questionLabel = document.getElementById("question-label");
@@ -245,8 +246,15 @@ function updateProgress() {
   progressText.textContent = `Bericht ${currentReport + 1} von ${REPORTS.length} · Frage ${Math.min(currentQuestion + 1, QUESTIONS.length)} von ${QUESTIONS.length}`;
 }
 
+function applyTheme(theme) {
+  const cls = `theme-${theme}`;
+  app.className = `app ${cls}`;
+  document.body.className = cls;
+}
+
 function showQuestion() {
   const q = QUESTIONS[currentQuestion];
+  applyTheme(q.theme);
   questionLabel.textContent = q.label;
   questionHint.textContent = q.hint;
   updateProgress();
@@ -254,7 +262,11 @@ function showQuestion() {
 
 function revealFact(key) {
   const el = reportBody.querySelector(`.fact[data-q="${key}"]`);
-  if (el) el.classList.add("revealed");
+  if (el) {
+    const q = QUESTIONS.find((item) => item.key === key);
+    el.classList.add("revealed");
+    if (q) el.classList.add(`revealed-${q.theme}`);
+  }
 }
 
 function handleWeiter() {
