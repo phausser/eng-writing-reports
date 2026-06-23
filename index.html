@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stani Reports – W-Fragen üben</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>Stani Reports</h1>
+      <p class="subtitle">W-Fragen klären: Wo? Wann? Wer? Warum? Wie? How?</p>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <p class="progress-text" id="progress-text">Bericht 1 von 10</p>
+    </header>
+
+    <main class="main">
+      <section class="report-section">
+        <h2 class="report-title" id="report-title"></h2>
+        <article class="report-body" id="report-body"></article>
+      </section>
+
+      <section class="question-section">
+        <div class="question-card" id="question-card">
+          <span class="question-label" id="question-label">Wo?</span>
+          <p class="question-hint" id="question-hint">Finde die Antwort im Bericht oben.</p>
+        </div>
+        <button class="btn-weiter" id="btn-weiter" type="button">Weiter</button>
+      </section>
+    </main>
+
+    <section class="vocab-toggle">
+      <button class="btn-vocab" id="btn-vocab" type="button" aria-expanded="false">
+        Vokabelliste anzeigen
+      </button>
+      <div class="vocab-panel hidden" id="vocab-panel"></div>
+    </section>
+
+    <footer class="footer" id="footer">
+      <p>Alle zentralen Fakten gehören in den Bericht.</p>
+    </footer>
+  </div>
+
+  <div class="overlay hidden" id="overlay">
+    <div class="overlay-card">
+      <h2>Alle Berichte geschafft!</h2>
+      <p>Du hast alle 10 Reports bearbeitet und alle W-Fragen geklärt.</p>
+      <button class="btn-weiter" id="btn-restart" type="button">Noch einmal</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

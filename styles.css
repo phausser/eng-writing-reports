@@ -1,0 +1,275 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --text: #1a2332;
+  --text-muted: #5a6a7e;
+  --accent: #2d5a8e;
+  --accent-light: #e8f0f8;
+  --highlight: #ffd6d6;
+  --highlight-border: #e8a0a0;
+  --border: #d8e0ea;
+  --radius: 12px;
+  --shadow: 0 4px 20px rgba(26, 35, 50, 0.08);
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 0.35rem;
+}
+
+.progress-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 99px;
+  margin: 1.25rem auto 0.5rem;
+  max-width: 320px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 99px;
+  width: 10%;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.report-section {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.75rem;
+  border: 1px solid var(--border);
+}
+
+.report-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+
+.report-body {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.report-body p {
+  margin-bottom: 0.75rem;
+}
+
+.report-body p:last-child {
+  margin-bottom: 0;
+}
+
+.fact {
+  border-radius: 4px;
+  padding: 1px 3px;
+  transition: background-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.fact.revealed {
+  background-color: var(--highlight);
+  box-shadow: inset 0 0 0 1px var(--highlight-border);
+}
+
+.question-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.question-card {
+  background: var(--accent-light);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1.25rem 2rem;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.question-label {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.2;
+}
+
+.question-hint {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+.btn-weiter {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.btn-weiter:hover {
+  background: #234a75;
+}
+
+.btn-weiter:active {
+  transform: scale(0.97);
+}
+
+.btn-weiter:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.vocab-toggle {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.btn-vocab {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-vocab:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.vocab-panel {
+  margin-top: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  text-align: left;
+  max-height: 280px;
+  overflow-y: auto;
+  font-size: 0.82rem;
+  columns: 2;
+  column-gap: 1.5rem;
+}
+
+.vocab-panel.hidden {
+  display: none;
+}
+
+.vocab-item {
+  break-inside: avoid;
+  margin-bottom: 0.35rem;
+}
+
+.vocab-item strong {
+  color: var(--accent);
+}
+
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 35, 50, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: var(--shadow);
+}
+
+.overlay-card h2 {
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.overlay-card p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 520px) {
+  .vocab-panel {
+    columns: 1;
+  }
+
+  .question-label {
+    font-size: 1.6rem;
+  }
+}
