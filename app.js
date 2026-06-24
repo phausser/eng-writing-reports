@@ -409,32 +409,34 @@ function revealFact(key) {
 }
 
 function handleWeiter() {
+  const isLastQuestion = currentQuestion === QUESTIONS.length - 1;
+
   if (!factRevealed) {
     revealFact(QUESTIONS[currentQuestion].key);
-    factRevealed = true;
-    updateButtonLabel();
-    return;
-  }
 
-  currentQuestion++;
-
-  if (currentQuestion >= QUESTIONS.length) {
-    currentQuestion = 0;
-    currentReport++;
-
-    if (currentReport >= REPORTS.length) {
-      overlay.classList.remove("hidden");
+    if (isLastQuestion) {
+      factRevealed = true;
+      updateButtonLabel();
       return;
     }
 
-    setTimeout(() => {
-      renderReport();
-      showQuestion();
-    }, 600);
+    currentQuestion++;
+    setTimeout(showQuestion, 350);
     return;
   }
 
-  setTimeout(showQuestion, 350);
+  currentQuestion = 0;
+  currentReport++;
+
+  if (currentReport >= REPORTS.length) {
+    overlay.classList.remove("hidden");
+    return;
+  }
+
+  setTimeout(() => {
+    renderReport();
+    showQuestion();
+  }, 600);
 }
 
 function restart() {
