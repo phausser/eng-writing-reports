@@ -201,6 +201,7 @@ const REPORTS = [
 
 let currentReport = 0;
 let currentQuestion = 0;
+let factRevealed = false;
 let reportOrder = [];
 
 function shuffleReports() {
@@ -384,11 +385,17 @@ function applyTheme(theme) {
   document.body.className = cls;
 }
 
+function updateButtonLabel() {
+  btnWeiter.textContent = factRevealed ? "Next" : "Show";
+}
+
 function showQuestion() {
   const q = QUESTIONS[currentQuestion];
   applyTheme(q.theme);
   questionLabel.textContent = q.label;
   questionHint.textContent = q.hint;
+  factRevealed = false;
+  updateButtonLabel();
   updateProgress();
 }
 
@@ -402,8 +409,13 @@ function revealFact(key) {
 }
 
 function handleWeiter() {
-  const q = QUESTIONS[currentQuestion];
-  revealFact(q.key);
+  if (!factRevealed) {
+    revealFact(QUESTIONS[currentQuestion].key);
+    factRevealed = true;
+    updateButtonLabel();
+    return;
+  }
+
   currentQuestion++;
 
   if (currentQuestion >= QUESTIONS.length) {
